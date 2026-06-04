@@ -27,16 +27,6 @@ export default function SignupPage() {
       return;
     }
 
-    if (data.user) {
-      const { error: profileError } = await supabase.from("profiles").insert({
-        id: data.user.id,
-        full_name: fullName,
-        role: "user",
-      });
-
-      console.log(profileError);
-    }
-
     alert("Signup successful. Check your email.");
   };
 

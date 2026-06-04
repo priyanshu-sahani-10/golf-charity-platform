@@ -72,24 +72,24 @@ export default function DashboardPage() {
   };
 
   const fetchSelectedCharity = async (uid: string) => {
-  const { data } = await supabase
-    .from("donations")
-    .select(`
+    const { data } = await supabase
+      .from("donations")
+      .select(
+        `
       charities (
         name
       )
-    `)
-    .eq("user_id", uid)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .single();
+    `,
+      )
+      .eq("user_id", uid)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
 
-  if (data?.charities) {
-    setCharityName((data.charities as any).name);
-  }
-};
-
-
+    if (data?.charities) {
+      setCharityName((data.charities as any).name);
+    }
+  };
 
   useEffect(() => {
     const checkUser = async () => {
@@ -178,20 +178,26 @@ export default function DashboardPage() {
                   alert("Please select a charity");
                   return;
                 }
+
                 const options = {
                   key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                   amount: 9900,
                   currency: "INR",
                   name: "Golf Charity",
                   description: "Monthly Subscription",
+
                   handler: async (response: any) => {
-                    await supabase.from("subscriptions").insert({
-                      user_id: userId,
-                      plan: "monthly",
-                      status: "active",
-                      amount: 99,
-                      payment_id: response.razorpay_payment_id,
-                    });
+                    const { data: subscription } = await supabase
+                      .from("subscriptions")
+                      .insert({
+                        user_id: userId,
+                        plan: "monthly",
+                        status: "active",
+                        amount: 99,
+                        payment_id: response.razorpay_payment_id,
+                      })
+                      .select()
+                      .single();
 
                     const donationAmount = 99 * 0.2;
 
@@ -199,6 +205,11 @@ export default function DashboardPage() {
                       user_id: userId,
                       charity_id: selectedCharity,
                       amount: donationAmount,
+                    });
+
+                    await supabase.from("prize_pools").insert({
+                      source_subscription_id: subscription?.id,
+                      total_amount: 99 * 0.8,
                     });
 
                     alert("Monthly Subscription Activated");
@@ -218,20 +229,26 @@ export default function DashboardPage() {
                   alert("Please select a charity");
                   return;
                 }
+
                 const options = {
                   key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
                   amount: 99900,
                   currency: "INR",
                   name: "Golf Charity",
                   description: "Yearly Subscription",
+
                   handler: async (response: any) => {
-                    await supabase.from("subscriptions").insert({
-                      user_id: userId,
-                      plan: "yearly",
-                      status: "active",
-                      amount: 999,
-                      payment_id: response.razorpay_payment_id,
-                    });
+                    const { data: subscription } = await supabase
+                      .from("subscriptions")
+                      .insert({
+                        user_id: userId,
+                        plan: "yearly",
+                        status: "active",
+                        amount: 999,
+                        payment_id: response.razorpay_payment_id,
+                      })
+                      .select()
+                      .single();
 
                     const donationAmount = 999 * 0.2;
 
@@ -239,6 +256,11 @@ export default function DashboardPage() {
                       user_id: userId,
                       charity_id: selectedCharity,
                       amount: donationAmount,
+                    });
+
+                    await supabase.from("prize_pools").insert({
+                      source_subscription_id: subscription?.id,
+                      total_amount: 999 * 0.8,
                     });
 
                     alert("Yearly Subscription Activated");
