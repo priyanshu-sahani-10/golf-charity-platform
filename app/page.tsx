@@ -261,7 +261,7 @@ export default function Home() {
           {/* CTAs */}
           <div className="flex gap-3 flex-wrap justify-center">
             <Link
-              href="/signup"
+              href="/"
               className="inline-flex items-center gap-2 px-7 py-3 rounded-[10px] font-semibold text-sm tracking-wide text-white no-underline transition-all duration-200"
               style={{
                 background: "#3d8143",
