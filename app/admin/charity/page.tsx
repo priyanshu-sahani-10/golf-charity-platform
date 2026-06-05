@@ -145,6 +145,35 @@ export default function CharityPage() {
           </p>
         </div>
 
+        <div className="grid md:grid-cols-3 gap-4">
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+    <p className="text-white/40 text-xs uppercase tracking-widest">
+      Total Charities
+    </p>
+    <p className="text-3xl font-black text-[#d4af37] mt-2">
+      {charities.length}
+    </p>
+  </div>
+
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+    <p className="text-white/40 text-xs uppercase tracking-widest">
+      Featured Causes
+    </p>
+    <p className="text-3xl font-black text-[#4a9850] mt-2">
+      {charities.length}
+    </p>
+  </div>
+
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl">
+    <p className="text-white/40 text-xs uppercase tracking-widest">
+      Platform Status
+    </p>
+    <p className="text-3xl font-black text-blue-400 mt-2">
+      Active
+    </p>
+  </div>
+</div>
+
         {/* Divider */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 

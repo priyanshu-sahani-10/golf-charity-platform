@@ -150,11 +150,9 @@ export default function Navbar() {
           }}
         >
           {[
-            { label: "Home", href: "#home" },
+            { label: "Home", href: "/" },
             { label: "Dashboard", href: "/dashboard" },
             { label: "Admin", href: "/admin" },
-            { label: "Charities", href: "#charities" },
-            { label: "FAQ", href: "#faq" },
           ].map((item) => (
             <li key={item.label}>
               <Link
