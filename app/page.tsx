@@ -6,14 +6,17 @@ import Link from "next/link";
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
+      const sections = document.querySelectorAll<HTMLElement>("section[id]");
       let cur = "";
+
       sections.forEach((s) => {
-        if (window.scrollY >= s.offsetTop - 80) cur = s.id;
+        if (window.scrollY >= s.offsetTop - 80) {
+          cur = s.id;
+        }
       });
       setActiveSection(cur);
     };
@@ -22,20 +25,27 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (mobileMenuOpen) {
-        const menu = document.getElementById("mobileMenu");
-        const hb = document.getElementById("hamburger");
-        if (menu && hb && !menu.contains(e.target) && !hb.contains(e.target)) {
-          setMobileMenuOpen(false);
-        }
-      }
-    };
+    const handleOutsideClick = (e: MouseEvent) => {
+  if (mobileMenuOpen) {
+    const menu = document.getElementById("mobileMenu");
+    const hb = document.getElementById("hamburger");
+
+    if (
+      menu &&
+      hb &&
+      e.target instanceof Node &&
+      !menu.contains(e.target) &&
+      !hb.contains(e.target)
+    ) {
+      setMobileMenuOpen(false);
+    }
+  }
+};
     document.addEventListener("click", handleOutsideClick);
     return () => document.removeEventListener("click", handleOutsideClick);
   }, [mobileMenuOpen]);
 
-  const toggleFaq = (idx) => {
+  const toggleFaq = (idx:number) => {
     setOpenFaq(openFaq === idx ? null : idx);
   };
 
@@ -98,7 +108,7 @@ export default function Home() {
     },
   ];
 
-  const navLinkClass = (id) =>
+  const navLinkClass = (id:string) =>
     `text-xs font-medium tracking-widest px-3.5 py-1.5 rounded-lg transition-colors duration-200 ${
       activeSection === id
         ? "text-white"
@@ -114,7 +124,6 @@ export default function Home() {
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-     
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
         html { scroll-behavior: smooth; }
@@ -159,10 +168,6 @@ export default function Home() {
           opacity: 0.035;
         }
       `}</style>
-
-      
-
-
 
       {/* ── HERO ── */}
       <section
